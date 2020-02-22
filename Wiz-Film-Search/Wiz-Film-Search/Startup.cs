@@ -27,7 +27,8 @@ namespace Wiz_Film_Search
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton(typeof(IMovieService), typeof(MovieService));
+            services.AddSingleton<IMovieService>(
+                new MovieService(Configuration["MoviesAPi:Url"], Configuration["MoviesAPi:Key"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
