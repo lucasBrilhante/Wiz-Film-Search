@@ -7,48 +7,37 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Wiz_Film_Search.Models;
+using Wiz_Film_Search.Services;
 using Wiz_Film_Search.Util;
 
 namespace Wiz_Film_Search.Service
 {
     public class MovieService : IMovieService
     {
-        private readonly string _movieUrl;
+        private ITheMoviedb _movieRepo;
         private readonly string _movieKey;
-        private IHttpClientFactory _clientFactory;
-        public MovieService(IConfiguration configuration, IHttpClientFactory clientFactory)
-        {  
-            _movieUrl = configuration["MoviesAPi:Url"];
+
+        public MovieService(IConfiguration configuration, ITheMoviedb theMoviedb)
+        {
+            _movieRepo = theMoviedb;
             _movieKey = configuration["MoviesAPi:Key"];
-            _clientFactory = clientFactory;
         }
 
         public async Task<IEnumerable<Movie>> GetMoviesAsync(int NumberOfPages)
         {
             bool nextPage = true;
             List<Movie> movies = new List<Movie>();
-            string query = "&page=";
             int currentPage = 1;
-
-            while (nextPage)
+            try
             {
-                
-                var request = new HttpRequestMessage(HttpMethod.Get, _movieUrl + "?api_key=" + _movieKey + query + currentPage);
-                //request.Headers.Add("Accept", "application/json");
-
-                var client = _clientFactory.CreateClient();
-
-                var response = await client.SendAsync(request);
-
-                if (response.IsSuccessStatusCode)
+                while (nextPage)
                 {
-                    var responseStream = await response.Content.ReadAsStringAsync();
+                    var pageMovies = await _movieRepo.GetLatestMovies(currentPage, _movieKey);
 
-                    MovieList pageMovies = JsonConvert.DeserializeObject
-                        <MovieList>(responseStream);
+
                     movies.AddRange(pageMovies.Results);
-                    
-                    if(currentPage < NumberOfPages && currentPage < pageMovies.TotalPages)
+
+                    if (currentPage < NumberOfPages && currentPage < pageMovies.TotalPages)
                     {
                         currentPage++;
                         continue;
@@ -57,13 +46,15 @@ namespace Wiz_Film_Search.Service
                     {
                         break;
                     }
+
                 }
-                else
-                {
-                    throw new HttpRequestException();
-                }
+                return movies;
             }
-            return movies;
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return null;
         }
     }
 }
