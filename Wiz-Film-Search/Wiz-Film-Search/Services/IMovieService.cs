@@ -8,6 +8,6 @@ namespace Wiz_Film_Search.Service
 {
     public interface IMovieService
     {
-        Task<MovieList> GetMoviesAsync();
+        Task<IEnumerable<Movie>> GetMoviesAsync(int numberOfPages);
     }
 }

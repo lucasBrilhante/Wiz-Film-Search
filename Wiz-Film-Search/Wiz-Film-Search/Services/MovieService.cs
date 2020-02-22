@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Wiz_Film_Search.Models;
+using Wiz_Film_Search.Util;
 
 namespace Wiz_Film_Search.Service
 {
@@ -22,28 +23,47 @@ namespace Wiz_Film_Search.Service
             _clientFactory = clientFactory;
         }
 
-        public async Task<MovieList> GetMoviesAsync()
+        public async Task<IEnumerable<Movie>> GetMoviesAsync(int NumberOfPages)
         {
-            string query = "&page=1";
-            var request = new HttpRequestMessage(HttpMethod.Get, _movieUrl + "top_rated" + "?api_key=" + _movieKey + query);
-            //request.Headers.Add("Accept", "application/json");
+            bool nextPage = true;
+            List<Movie> movies = new List<Movie>();
+            string query = "&page=";
+            int currentPage = 1;
 
-            var client = _clientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
+            while (nextPage)
             {
-                var responseStream = await response.Content.ReadAsStringAsync();
+                
+                var request = new HttpRequestMessage(HttpMethod.Get, _movieUrl + "?api_key=" + _movieKey + query + currentPage);
+                //request.Headers.Add("Accept", "application/json");
 
-                MovieList movies= JsonConvert.DeserializeObject
-                    <MovieList>(responseStream);
-                return movies;
+                var client = _clientFactory.CreateClient();
+
+                var response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseStream = await response.Content.ReadAsStringAsync();
+
+                    MovieList pageMovies = JsonConvert.DeserializeObject
+                        <MovieList>(responseStream);
+                    movies.AddRange(pageMovies.Results);
+                    
+                    if(currentPage <= NumberOfPages && currentPage < pageMovies.TotalPages)
+                    {
+                        currentPage++;
+                        continue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    throw new HttpRequestException();
+                }
             }
-            else
-            {
-                return null;
-            }
+            return movies;
         }
     }
 }

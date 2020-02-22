@@ -18,6 +18,6 @@ namespace Wiz_Film_Search.Models
         public long TotalPages { get; set; }
 
         [JsonProperty("results")]
-        public Movie[] Results { get; set; }
+        public List<Movie> Results { get; set; }
     }
 }

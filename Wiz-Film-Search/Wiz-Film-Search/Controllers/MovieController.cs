@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Wiz_Film_Search.Service;
+using Wiz_Film_Search.Util;
 
 namespace Wiz_Film_Search.Controllers
 {
@@ -18,10 +19,10 @@ namespace Wiz_Film_Search.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] int numberOfPages = 1)
         {
-            var movies = await _movieService.GetMoviesAsync();
-            return Json(movies.Results);
+            var movies = await _movieService.GetMoviesAsync(numberOfPages);
+            return Json(movies);
         }
     }
 }
