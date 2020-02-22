@@ -8,6 +8,6 @@ namespace Wiz_Film_Search.Service
 {
     public interface IMovieService
     {
-        List<Movie> GetMoviesAsync();
+        Task<MovieList> GetMoviesAsync();
     }
 }

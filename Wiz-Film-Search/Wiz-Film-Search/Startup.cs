@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Wiz_Film_Search.Controllers;
 using Wiz_Film_Search.Service;
 
 namespace Wiz_Film_Search
@@ -26,9 +27,11 @@ namespace Wiz_Film_Search
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddHttpClient();
+            services.AddSingleton(typeof(IMovieService), typeof(MovieService));
             services.AddControllers();
-            services.AddSingleton<IMovieService>(
-                new MovieService(Configuration["MoviesAPi:Url"], Configuration["MoviesAPi:Key"]));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

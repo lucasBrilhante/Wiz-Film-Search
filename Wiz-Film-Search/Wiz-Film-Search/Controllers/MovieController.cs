@@ -7,18 +7,21 @@ using Wiz_Film_Search.Service;
 
 namespace Wiz_Film_Search.Controllers
 {
+    [Route("/api/[controller]")]
     public class MovieController : Controller
     {
-        MovieService _movieService;
-
-        public MovieController(MovieService movieService)
+        IMovieService _movieService;
+        
+        public MovieController(IMovieService movieService)
         {
             _movieService = movieService;
-        } 
-        public IActionResult Get()
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var movies = _movieService.GetMoviesAsync();
-            return Json(movies);
+            var movies = await _movieService.GetMoviesAsync();
+            return Json(movies.Results);
         }
     }
 }
