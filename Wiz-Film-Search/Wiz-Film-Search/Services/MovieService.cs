@@ -24,33 +24,25 @@ namespace Wiz_Film_Search.Service
             bool nextPage = true;
             List<Movie> movies = new List<Movie>();
             int currentPage = 1;
-            try
+            
+            while (nextPage)
             {
-                while (nextPage)
+                var pageMovies = await _movieRepo.GetLatestMovies(currentPage, _movieKey);
+
+                movies.AddRange(pageMovies.Results);
+
+                if (currentPage < NumberOfPages && currentPage < pageMovies.TotalPages)
                 {
-                    var pageMovies = await _movieRepo.GetLatestMovies(currentPage, _movieKey);
-
-
-                    movies.AddRange(pageMovies.Results);
-
-                    if (currentPage < NumberOfPages && currentPage < pageMovies.TotalPages)
-                    {
-                        currentPage++;
-                        continue;
-                    }
-                    else
-                    {
-                        break;
-                    }
-
+                    currentPage++;
+                    continue;
                 }
-                return movies;
+                else
+                {
+                    break;
+                }
+
             }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return null;
+            return movies;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Wiz_Film_Search.Service;
 
@@ -17,8 +18,16 @@ namespace Wiz_Film_Search.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] int numberOfPages = 1)
         {
-            var movies = await _movieService.GetMoviesAsync(numberOfPages);
-            return Json(movies);
+            try
+            {
+                var movies = await _movieService.GetMoviesAsync(numberOfPages);
+                return Json(movies);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message); // Log to a logging service
+                return StatusCode(500);
+            }
         }
     }
 }
