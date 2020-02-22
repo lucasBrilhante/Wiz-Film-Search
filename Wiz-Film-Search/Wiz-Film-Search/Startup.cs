@@ -14,6 +14,7 @@ using Wiz_Film_Search.Controllers;
 using Wiz_Film_Search.Service;
 using Wiz_Film_Search.Services;
 using Refit;
+using Wiz_Film_Search.Middleware;
 
 namespace Wiz_Film_Search
 {
@@ -34,6 +35,7 @@ namespace Wiz_Film_Search
             services.AddRefitClient<ITheMoviedb>()
                    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration["MoviesApi:Url"]));
             services.AddSingleton(typeof(IMovieService), typeof(MovieService));
+            services.AddSingleton(typeof(ITokenRepoService), typeof(TokenRepoService));
             services.AddControllers();
 
         }
@@ -51,6 +53,8 @@ namespace Wiz_Film_Search
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.ApplyUserKeyValidation();
 
             app.UseEndpoints(endpoints =>
             {
