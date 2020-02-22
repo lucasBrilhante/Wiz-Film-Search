@@ -48,7 +48,7 @@ namespace Wiz_Film_Search.Service
                         <MovieList>(responseStream);
                     movies.AddRange(pageMovies.Results);
                     
-                    if(currentPage <= NumberOfPages && currentPage < pageMovies.TotalPages)
+                    if(currentPage < NumberOfPages && currentPage < pageMovies.TotalPages)
                     {
                         currentPage++;
                         continue;
