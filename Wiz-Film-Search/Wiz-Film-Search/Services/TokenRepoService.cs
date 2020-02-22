@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Wiz_Film_Search.Services
 {
@@ -9,6 +6,8 @@ namespace Wiz_Film_Search.Services
     {
         public bool CheckValidUserKey(string apikey)
         {
+            //This would be the place to access a database or a authentication service
+            //For this project we will use this mock
             var apikeyList = new List<string>();
             apikeyList.Add("28236d8ec201df516d0f6472d516d72d");
             apikeyList.Add("38236d8ec201df516d0f6472d516d72c");

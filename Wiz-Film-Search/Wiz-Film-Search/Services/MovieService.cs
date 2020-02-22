@@ -2,13 +2,9 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Wiz_Film_Search.Models;
 using Wiz_Film_Search.Services;
-using Wiz_Film_Search.Util;
 
 namespace Wiz_Film_Search.Service
 {

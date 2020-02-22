@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Wiz_Film_Search.Service;
-using Wiz_Film_Search.Util;
 
 namespace Wiz_Film_Search.Controllers
 {

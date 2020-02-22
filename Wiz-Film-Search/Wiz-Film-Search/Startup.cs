@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Wiz_Film_Search.Controllers;
 using Wiz_Film_Search.Service;
 using Wiz_Film_Search.Services;
 using Refit;
@@ -54,7 +47,7 @@ namespace Wiz_Film_Search
 
             app.UseAuthorization();
 
-            app.ApplyUserKeyValidation();
+            app.ApplyApiKeyValidation();
 
             app.UseEndpoints(endpoints =>
             {

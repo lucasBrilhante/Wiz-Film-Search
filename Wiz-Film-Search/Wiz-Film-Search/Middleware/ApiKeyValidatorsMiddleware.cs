@@ -1,19 +1,16 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Wiz_Film_Search.Services;
 
 namespace Wiz_Film_Search.Middleware
 {
-    public class UserKeyValidatorsMiddleware
+    public class ApiKeyValidatorsMiddleware
     {
         private readonly RequestDelegate _next;
         private ITokenRepoService _repo { get; set; }
 
-        public UserKeyValidatorsMiddleware(RequestDelegate next, ITokenRepoService repo)
+        public ApiKeyValidatorsMiddleware(RequestDelegate next, ITokenRepoService repo)
         {
             _next = next;
             _repo = repo;
@@ -43,11 +40,11 @@ namespace Wiz_Film_Search.Middleware
     }
 
     #region ExtensionMethod
-    public static class UserKeyValidatorsExtension
+    public static class ApiKeyValidatorsExtension
     {
-        public static IApplicationBuilder ApplyUserKeyValidation(this IApplicationBuilder app)
+        public static IApplicationBuilder ApplyApiKeyValidation(this IApplicationBuilder app)
         {
-            app.UseMiddleware<UserKeyValidatorsMiddleware>();
+            app.UseMiddleware<ApiKeyValidatorsMiddleware>();
             return app;
         }
     }
