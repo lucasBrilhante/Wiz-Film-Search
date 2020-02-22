@@ -6,12 +6,8 @@ using Wiz_Film_Search.Models;
 
 namespace Wiz_Film_Search.Service
 {
-    public class MovieService : IMovieService
+    public interface IMovieService
     {
-        public List<Movie> GetMoviesAsync()
-        {
-
-            return null;
-        }
+        List<Movie> GetMoviesAsync();
     }
 }

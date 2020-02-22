@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Wiz_Film_Search.Service;
 
 namespace Wiz_Film_Search
 {
@@ -26,6 +27,7 @@ namespace Wiz_Film_Search
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton(typeof(IMovieService), typeof(MovieService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
