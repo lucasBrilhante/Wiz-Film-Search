@@ -8,9 +8,9 @@ namespace Wiz_Film_Search.Controllers
 {
     public class MovieController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Get()
         {
-            return View();
+            return Ok();
         }
     }
 }
