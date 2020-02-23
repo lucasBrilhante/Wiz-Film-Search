@@ -19,7 +19,7 @@ namespace Wiz_Film_Search.Service
             _movieKey = configuration["MoviesAPi:Key"];
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesAsync(int NumberOfPages)
+        public async Task<List<Movie>> GetMoviesAsync(int NumberOfPages)
         {
             bool nextPage = true;
             List<Movie> movies = new List<Movie>();
