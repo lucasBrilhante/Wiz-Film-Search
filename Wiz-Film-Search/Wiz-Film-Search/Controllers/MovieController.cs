@@ -26,7 +26,7 @@ namespace Wiz_Film_Search.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.Message); // Log to a logging service
-                return StatusCode(500);
+                return StatusCode(500, "There was an error.");
             }
         }
     }
