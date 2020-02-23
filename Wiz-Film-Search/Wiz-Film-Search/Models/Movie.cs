@@ -9,7 +9,7 @@ namespace Wiz_Film_Search.Models
     public class Movie
     {
         [JsonProperty("genre_ids")]
-        public long[] GenreIds { get; set; }
+        public string[] GenreIds { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }

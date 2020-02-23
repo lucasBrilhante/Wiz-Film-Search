@@ -35,7 +35,7 @@ namespace Wiz_Film_Search.Test.Controllers
         public List<Movie> GetMockMovies(int i)
         {
             var list = new List<Movie>();
-            long[] array = { 10, 20, 30, 40 };
+            string[] array = { "10", "20", "30", "40"};
             for (int j = 0; j < i*20; j++)
             {
                 list.Add(new Movie()

@@ -40,7 +40,23 @@ namespace Wiz_Film_Search.Service
                 }
 
             }
+            await OverrideGenres(movies);
             return movies;
+        }
+
+        private async Task OverrideGenres(List<Movie> movies)
+        {
+            var genresList = await _movieRepo.GetGenres(_movieKey);
+            var genresDic = genresList.GetGenresDictionary();
+            foreach (var movie in movies)
+            {
+                List<string> newGens = new List<string>();
+                foreach (string gen in movie.GenreIds)
+                {
+                    newGens.Add(genresDic[gen]);
+                }
+                movie.GenreIds = newGens.ToArray();
+            }
         }
     }
 }

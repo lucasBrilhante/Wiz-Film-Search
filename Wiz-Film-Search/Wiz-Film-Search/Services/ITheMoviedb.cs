@@ -8,5 +8,8 @@ namespace Wiz_Film_Search.Services
     {
         [Get("/movie/upcoming?api_key={api_key}&page={page}")]
         Task<MovieList> GetLatestMovies([Query] int page, [Query] string api_key);
+
+        [Get("/genre/movie/list?api_key={api_key}")]
+        Task<Genres> GetGenres([Query] string api_key);
     }
 }
